@@ -6,13 +6,14 @@ const Express = require('express');
 const Clarifai = require('./src/clarifai');
 const Image = require('./src/image');
 const Mail = require('./src/mail');
+const UnviersalAnalitycs = require('./src/analitycs');
 
 const CLARIFAI = {
     id: process.env.CLARIFAI_ID || '',
     secret: process.env.CLARIFAI_SECRET || ''
 };
-const MAIL_DATA = { 
-    apiKey: process.env.MAILGUN_API_KEY || '', 
+const MAIL_DATA = {
+    apiKey: process.env.MAILGUN_API_KEY || '',
     domain: process.env.MAILGUN_DOMAIN || ''
 };
 
@@ -20,6 +21,8 @@ let app = Express();
 let clarifai = Clarifai(CLARIFAI.id, CLARIFAI.secret);
 let image = Image();
 let mail = new Mail(MAIL_DATA);
+
+let analitycs = UnviersalAnalitycs();
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -36,7 +39,12 @@ app.post('/api/v1/image', function (req, res) {
     image.decode(base64, 'image.png',
         () => { res.send(200, "OK") }
     );
-})
+});
+
+app.post('/api/v1/analitycs', function (req, res) {
+
+    res.send(200, "OK");
+});
 
 app.post('/api/v1/mail', (req, res) => {
     mail.send(function (error, body) {
@@ -45,6 +53,6 @@ app.post('/api/v1/mail', (req, res) => {
     });
 });
 
-app.listen(process.env.PORT || 8080, process.env.IP || "0.0.0.0", function (){
-  console.log("listening");
+app.listen(process.env.PORT || 8080, process.env.IP || "0.0.0.0", function () {
+    console.log("listening");
 });
