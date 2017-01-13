@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "engines": {
-	"node": "6.7.0"
+    "node": "6.7.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/jjcc1421/Huge-Hackathon-2017#readme",
   "dependencies": {
+    "clarifai": "^2.1.0-dev",
     "express": "^4.14.0"
   }
 }
