@@ -6,7 +6,7 @@ const Express = require('express');
 const Clarifai = require('./src/clarifai');
 const Image = require('./src/image');
 const Mail = require('./src/mail');
-const UnviersalAnalitycs = require('./src/analitycs');
+const UnviersalAnalytics = require('./src/analitycs');
 
 const CLARIFAI = {
     id: process.env.CLARIFAI_ID || '',
@@ -17,11 +17,13 @@ const MAIL_DATA = {
     domain: process.env.MAILGUN_DOMAIN || ''
 };
 
+const GOOGLE_ANALYTICS = {
+    trakingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID || ''
+};
+
 let app = Express();
 let clarifai = Clarifai(CLARIFAI.id, CLARIFAI.secret);
-let image = Image();
-
-let analitycs = UnviersalAnalitycs();
+let analytics = UnviersalAnalytics(GOOGLE_ANALYTICS.trakingId);
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -33,15 +35,16 @@ app.get('/', (req, res) => {
 
 
 app.post('/api/v1/image', function (req, res) {
-    var base64 = req.body.base64;
-    var imageId = req.body.id;
+    let image = Image();
+    let base64 = req.body.base64;
+    let imageId = req.body.id;
     image.decode(base64, 'image.png',
         () => { res.send(200, "OK") }
     );
 });
 
 app.post('/api/v1/analitycs', function (req, res) {
-
+    analytics.event();
     res.send(200, "OK");
 });
 
