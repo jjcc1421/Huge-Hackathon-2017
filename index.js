@@ -15,6 +15,7 @@ var image = require('./src/image')();
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use('/public', express.static(__dirname + '/public/'));
 
 app.get('/', function (req, res) {
     res.send('Hello World!');
@@ -36,6 +37,8 @@ app.post('/api/v1/mail', function (req, res) {
     res.send('Email Sent');
 
 });
+
+
 
 app.listen(PORT, function () {
     console.log('Example app listening on port ' + PORT)
