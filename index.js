@@ -12,10 +12,6 @@ const CLARIFAI = {
     id: process.env.CLARIFAI_ID || '',
     secret: process.env.CLARIFAI_SECRET || ''
 };
-const MAIL_DATA = {
-    apiKey: process.env.MAILGUN_API_KEY || '',
-    domain: process.env.MAILGUN_DOMAIN || ''
-};
 
 const GOOGLE_ANALYTICS = {
     trakingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID || ''
@@ -24,6 +20,11 @@ const GOOGLE_ANALYTICS = {
 let app = Express();
 let clarifai = Clarifai(CLARIFAI.id, CLARIFAI.secret);
 let analytics = UnviersalAnalytics(GOOGLE_ANALYTICS.trakingId);
+let image = Image();
+let mail = new Mail({
+    apiKey: process.env.MAILGUN_API_KEY || '',
+    domain: process.env.MAILGUN_DOMAIN || ''
+});
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -48,17 +49,10 @@ app.post('/api/v1/analitycs', function (req, res) {
     res.send(200, "OK");
 });
 
-app.get('/api/v1/mail', (req, res) => {
-    let mail = Mail(MAIL_DATA);
-    let data = {
-        from: 'Excited User <me@samples.mailgun.org>',
-        to: 'anderson1564@gmail.com',
-        subject: 'Hello',
-        text: 'Testing some Mailgun awesomness!'
-    };
-
-    mail.messages().send(data, function (error, body) {
-        console.log(body);
+app.post('/api/v1/mail', (req, res) => {
+    mail.send(function (error, body) {
+      console.log(body);
+      res.send('Email Sent');
     });
 });
 
