@@ -1,11 +1,11 @@
 const PORT = process.env.PORT || 8080;
 const CLARIFAI = {
-    id: process.env.CLARIFAI_ID,
-    secret: process.env.CLARIFAI_SECRET
+    id: process.env.CLARIFAI_ID || '' ,
+    secret: process.env.CLARIFAI_SECRET || ''
 }
 
 var express = require('express');
-var clarifai = require('/clarifai/clarifai')(CLARIFAI.id,CLARIFAI.secret); 
+var clarifai = require('./clarifai/clarifai')(CLARIFAI.id,CLARIFAI.secret); 
 var app = express();
 
 
