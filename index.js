@@ -13,6 +13,8 @@ var clarifai = require('./src/clarifai')(CLARIFAI.id, CLARIFAI.secret);
 var app = express();
 var image = require('./src/image')();
 
+var analitycs = require('./src/analitycs');
+
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use('/public', express.static(__dirname + '/public/'));
@@ -28,11 +30,17 @@ app.post('/api/v1/image', function (req, res) {
             res.send(200, "OK");
         }
     );
-})
+});
+
+app.post('/api/v1/analitycs', function (req, res) {
+    
+    res.send(200, "OK");
+});
 
 app.post('/api/v1/mail', function (req, res) {
     // Sent email
-    res.send('Email Sent');
+    //analitycs.
+    res.send(200,'analitycs');
 });
 
 app.listen(PORT, function () {
