@@ -28,7 +28,6 @@ app.post('/image', function (req, res) {
             res.send(200, "OK");
         }
     );
-    //res.send();
 })
 
 app.post('/api/v1/mail', function (req, res) {
