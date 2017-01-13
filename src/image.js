@@ -10,7 +10,7 @@ module.exports = function () {
             base64Data,
             { encoding: 'base64' },
             function (err) {
-                if (err) console.err(err)
+                if (err) console.error(err)
                 else callback();
             }
         );
