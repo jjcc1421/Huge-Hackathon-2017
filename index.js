@@ -22,18 +22,19 @@ let image = Image();
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use('/public', express.static(__dirname + '/public/'));
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.post('/image', (req, res) => {
-    let base64 = req.body.base64;
-    let imageId = req.body.id;
+
+app.post('/api/v1/image', function (req, res) {
+    var base64 = req.body.base64;
+    var imageId = req.body.id;
     image.decode(base64, 'image.png',
         () => { res.send(200, "OK") }
     );
-    //res.send();
 })
 
 app.get('/api/v1/mail', (req, res) => {
@@ -49,6 +50,10 @@ app.get('/api/v1/mail', (req, res) => {
       console.log(body);
     });
 
+=======
+app.post('/api/v1/mail', function (req, res) {
+    // Sent email
+>>>>>>> 7a738319eefefaf36aed95474982ca7e8b2dd7fe
     res.send('Email Sent');
 });
 
