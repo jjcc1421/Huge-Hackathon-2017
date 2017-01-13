@@ -5,18 +5,27 @@ const CLARIFAI = {
 };
 
 var express = require('express');
-var clarifai = require('./clarifai/clarifai')(CLARIFAI.id, CLARIFAI.secret);
 var app = express();
-var image = require('./image/image')();
+var bodyParser = require('body-parser');
 
+var image = require('./image/image')();
+var clarifai = require('./clarifai/clarifai')(CLARIFAI.id, CLARIFAI.secret);
+
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.get('/', function (req, res) {
     res.send('Hello World!');
 });
 app.post('/image', function (req, res) {
     var base64 = req.body.base64;
-    image.decode(base64);
-    res.send('Hello World!');
+    var imageId = req.body.id;
+    image.decode(base64, 'image.png',
+        function () {
+            res.send(200, "OK");
+        }
+    );
+    //res.send();
 })
 
 app.post('/api/v1/mail', function (req, res) {

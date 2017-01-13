@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/jjcc1421/Huge-Hackathon-2017#readme",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "clarifai": "^2.1.0-dev",
     "express": "^4.14.0",
     "mailgun-js": "^0.8.0"
