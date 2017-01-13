@@ -12,15 +12,14 @@ const CLARIFAI = {
     id: process.env.CLARIFAI_ID || '',
     secret: process.env.CLARIFAI_SECRET || ''
 };
-const MAIL_DATA = {
-    apiKey: process.env.MAILGUN_API_KEY || '',
-    domain: process.env.MAILGUN_DOMAIN || ''
-};
 
 let app = Express();
 let clarifai = Clarifai(CLARIFAI.id, CLARIFAI.secret);
 let image = Image();
-let mail = new Mail(MAIL_DATA);
+let mail = new Mail({
+    apiKey: process.env.MAILGUN_API_KEY || '',
+    domain: process.env.MAILGUN_DOMAIN || ''
+});
 
 let analitycs = UnviersalAnalitycs();
 
