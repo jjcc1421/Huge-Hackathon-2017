@@ -1,0 +1,22 @@
+{
+  "name": "huge-hackathon-2017",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjcc1421/Huge-Hackathon-2017.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jjcc1421/Huge-Hackathon-2017/issues"
+  },
+  "homepage": "https://github.com/jjcc1421/Huge-Hackathon-2017#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
