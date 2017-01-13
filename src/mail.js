@@ -19,7 +19,7 @@ function Mail (options) {
 // }
 
 proto.send = function send(data, cb) {
-    let data = {
+    let emailData = {
       from: 'New Hope <help-request@samples.mailgun.org>',
       to: data.recipientEmail,
       subject: '${data.user.name} ${data.user.lastName} Needs Your Help',
@@ -31,7 +31,7 @@ proto.send = function send(data, cb) {
         `Thank You!`
     };
 
-    this.mail.messages().send(data, cb);
+    this.mail.messages().send(emailData, cb);
 };
 
 module.exports = Mail;

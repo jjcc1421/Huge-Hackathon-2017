@@ -6,7 +6,7 @@ const Express = require('express');
 const Clarifai = require('./src/clarifai');
 const Image = require('./src/image');
 const Mail = require('./src/mail');
-const UnviersalAnalytics = require('./src/analitycs');
+const UnviersalAnalytics = require('./src/analytics');
 
 const CLARIFAI = {
     id: process.env.CLARIFAI_ID || '',
