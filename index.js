@@ -20,7 +20,7 @@ app.use('/public', express.static(__dirname + '/public/'));
 app.get('/', function (req, res) {
     res.send('Hello World!');
 });
-app.post('/image', function (req, res) {
+app.post('/api/v1/image', function (req, res) {
     var base64 = req.body.base64;
     var imageId = req.body.id;
     image.decode(base64, 'image.png',
@@ -32,12 +32,8 @@ app.post('/image', function (req, res) {
 
 app.post('/api/v1/mail', function (req, res) {
     // Sent email
-
     res.send('Email Sent');
-
 });
-
-
 
 app.listen(PORT, function () {
     console.log('Example app listening on port ' + PORT)
