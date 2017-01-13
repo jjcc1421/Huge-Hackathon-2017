@@ -1,48 +1,64 @@
-const PORT = process.env.PORT || 8080;
+"use strict";
+
+require('dotenv').load();
+const bodyParser = require('body-parser');
+const Express = require('express');
+const Clarifai = require('./src/clarifai');
+const Image = require('./src/image');
+const Mail = require('./src/mail');
+const UnviersalAnalitycs = require('./src/analitycs');
+
 const CLARIFAI = {
     id: process.env.CLARIFAI_ID || '',
     secret: process.env.CLARIFAI_SECRET || ''
 };
+const MAIL_DATA = {
+    apiKey: process.env.MAILGUN_API_KEY || '',
+    domain: process.env.MAILGUN_DOMAIN || ''
+};
 
-var express = require('express');
+let app = Express();
+let clarifai = Clarifai(CLARIFAI.id, CLARIFAI.secret);
+let image = Image();
 
-var app = express();
-var bodyParser = require('body-parser');
-
-var clarifai = require('./src/clarifai')(CLARIFAI.id, CLARIFAI.secret);
-var app = express();
-var image = require('./src/image')();
-
-var analitycs = require('./src/analitycs');
+let analitycs = UnviersalAnalitycs();
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-app.use('/public', express.static(__dirname + '/public/'));
+app.use('/public', Express.static(__dirname + '/public/'));
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
     res.send('Hello World!');
 });
+
+
 app.post('/api/v1/image', function (req, res) {
     var base64 = req.body.base64;
     var imageId = req.body.id;
     image.decode(base64, 'image.png',
-        function () {
-            res.send(200, "OK");
-        }
+        () => { res.send(200, "OK") }
     );
 });
 
 app.post('/api/v1/analitycs', function (req, res) {
-    
+
     res.send(200, "OK");
 });
 
-app.post('/api/v1/mail', function (req, res) {
-    // Sent email
-    //analitycs.
-    res.send(200,'analitycs');
+app.get('/api/v1/mail', (req, res) => {
+    let mail = Mail(MAIL_DATA);
+    let data = {
+        from: 'Excited User <me@samples.mailgun.org>',
+        to: 'anderson1564@gmail.com',
+        subject: 'Hello',
+        text: 'Testing some Mailgun awesomness!'
+    };
+
+    mail.messages().send(data, function (error, body) {
+        console.log(body);
+    });
 });
 
-app.listen(PORT, function () {
-    console.log('Example app listening on port ' + PORT)
+app.listen(process.env.PORT || 8080, process.env.IP || "0.0.0.0", function () {
+    console.log("listening");
 });
