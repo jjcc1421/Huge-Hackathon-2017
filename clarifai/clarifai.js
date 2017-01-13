@@ -14,9 +14,10 @@ module.exports = function (clientId, clientSecret) {
             },
             function (err) {
                 // there was an error
+                console.error('Error: ', err);
             }
         );
     };
 
     return module;
-}
+};
