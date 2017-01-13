@@ -16,8 +16,10 @@ const CLARIFAI_ID = process.env.CLARIFAI_ID || '';
 const CLARIFAI_SECRET = process.env.CLARIFAI_SECRET || '';
 const GOOGLE_ANALYTICS = process.env.GOOGLE_ANALYTICS_TRACKING_ID || '';
 const PORT = process.env.PORT || 8080;
-const IP = process.env.IP || "0.0.0.0";
+const IP = process.env.IP || '0.0.0.0';
+const BASE_URL= process.env.BASE_URL;
 
+if(BASE_URL) throw Error('Error Url enviroment variable not found')
 // Declarations
 let app = Express();
 let clarifai = Clarifai(CLARIFAI_ID, CLARIFAI_SECRET);
@@ -42,11 +44,17 @@ app.post('/api/v1/image', (req, res) => {
     let image = Image();
     let base64 = req.body.base64;
     let imageId = req.body.id;
-    image.decode(
-        base64, 
-        'image.png',
-        () => { res.send(200, "OK") }
-    );
+    image
+        .decode(base64, `${imageId}.png`)
+        .then((result) => {
+            clarifai.predict(
+                `${BASE_URL}/public/images/${result}`,
+                (response) => { res.send(200, response); }
+            );
+        }).catch((err) => {
+            // TODO: Find a better response status
+            res.send(400, 'Error saving the image.');
+        });
 });
 
 app.post('/api/v1/analitycs', (req, res) => {
@@ -56,8 +64,8 @@ app.post('/api/v1/analitycs', (req, res) => {
 
 app.post('/api/v1/mail', (req, res) => {
     mail.send(function (error, body) {
-      console.log(body);
-      res.send(200, 'Email Sent');
+        console.log(body);
+        res.send(200, 'Email Sent');
     });
 });
 
