@@ -2,4 +2,6 @@
 
 const MailGun = require('mailgun-js');
 
-module.exports = (options) => MailGun(options);
+module.exports = (options) => { 
+    return MailGun(options); 
+};

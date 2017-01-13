@@ -1,3 +1,5 @@
+"use strict";
+
 var Clarifai = require('clarifai');
 
 module.exports = function (clientId, clientSecret) {

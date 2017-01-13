@@ -226,3 +226,4 @@ node_modules
 #
 #
 # # End of https://www.gitignore.io/api/vim,emacs,intellij,emacs,sublimetext,node
+public/images
