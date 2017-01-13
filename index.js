@@ -19,10 +19,11 @@ const MAIL_DATA = {
 let app = Express();
 let clarifai = Clarifai(CLARIFAI.id, CLARIFAI.secret);
 let image = Image();
+let mail = new Mail(MAIL_DATA);
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-app.use('/public', express.static(__dirname + '/public/'));
+app.use('/public', Express.static(__dirname + '/public/'));
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
@@ -37,24 +38,11 @@ app.post('/api/v1/image', function (req, res) {
     );
 })
 
-app.get('/api/v1/mail', (req, res) => {
-    let mail = Mail(MAIL_DATA);
-    let data = {
-      from: 'Excited User <me@samples.mailgun.org>',
-      to: 'anderson1564@gmail.com',
-      subject: 'Hello',
-      text: 'Testing some Mailgun awesomness!'
-    };
-
-    mail.messages().send(data, function (error, body) {
+app.post('/api/v1/mail', (req, res) => {
+    mail.send(function (error, body) {
       console.log(body);
+      res.send('Email Sent');
     });
-
-=======
-app.post('/api/v1/mail', function (req, res) {
-    // Sent email
->>>>>>> 7a738319eefefaf36aed95474982ca7e8b2dd7fe
-    res.send('Email Sent');
 });
 
 app.listen(process.env.PORT || 8080, process.env.IP || "0.0.0.0", function (){
