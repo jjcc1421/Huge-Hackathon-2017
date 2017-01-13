@@ -23,6 +23,7 @@ app.post('/api/v1/mail', function (req, res) {
 
 });
 
+app.post
 app.listen(PORT, function () {
     console.log('Example app listening on port ' + PORT)
 });
