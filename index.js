@@ -5,9 +5,9 @@ const CLARIFAI = {
 };
 
 var express = require('express');
-var clarifai = require('./clarifai/clarifai')(CLARIFAI.id, CLARIFAI.secret);
+var clarifai = require('./src/clarifai/clarifai')(CLARIFAI.id, CLARIFAI.secret);
 var app = express();
-var image = require('./image/image')();
+var image = require('./src/image/image')();
 
 
 app.get('/', function (req, res) {
