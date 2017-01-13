@@ -5,11 +5,13 @@ const CLARIFAI = {
 };
 
 var express = require('express');
+
 var app = express();
 var bodyParser = require('body-parser');
 
-var image = require('./image/image')();
-var clarifai = require('./clarifai/clarifai')(CLARIFAI.id, CLARIFAI.secret);
+var clarifai = require('./src/clarifai')(CLARIFAI.id, CLARIFAI.secret);
+var app = express();
+var image = require('./src/image')();
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
