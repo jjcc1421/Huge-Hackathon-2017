@@ -8,7 +8,8 @@ module.exports = function () {
             const concept = data.outputs[0].data.concepts[0];
             let parsed = {
                 value: null,
-                currency: null
+                currency: null,
+                confidence: concept.value
             };
             if (concept.value > 0.6)
                 switch (concept.name) {
