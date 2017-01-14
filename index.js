@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 8080;
 const IP = process.env.IP || '0.0.0.0';
 const BASE_URL= process.env.BASE_URL;
 
-if(BASE_URL) throw Error('Error Url enviroment variable not found')
+if(!BASE_URL) throw Error('Error Url enviroment variable not found');
 // Declarations
 let app = Express();
 let clarifai = Clarifai(CLARIFAI_ID, CLARIFAI_SECRET);
