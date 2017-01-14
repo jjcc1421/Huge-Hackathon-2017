@@ -35,6 +35,7 @@ let billModel = BillModel();
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(timeout(120000));
 
 // Routes
 app.get('/', (req, res) => {
