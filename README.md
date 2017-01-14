@@ -5,17 +5,29 @@
 Create a .env file and the set enviroment variables:
 
 BASE_URL='...'
+
 CLARIFAI_ID='...'
+
 CLARIFAI_SECRET='...'
+
 CLARIFAI_MODEL_ID='...'
+
 MAILGUN_API_KEY='...'
+
 MAILGUN_DOMAIN='...'
+
 MAILGUN_PUBLIC_KEY='...'
+
 MAILGUN_SMTP_LOGIN='...'
+
 MAILGUN_SMTP_PASSWORD='...'
+
 MAILGUN_SMTP_PORT='...'
+
 MAILGUN_SMTP_SERVER='...'
+
 GOOGLE_ANALYTICS_TRACKING_ID='...'
+
 
 ## API
 
