@@ -48,13 +48,15 @@ app.use('/public', Express.static(__dirname + '/public/'));
 app.post('/api/v1/image', (req, res) => {
     let image = Image();
     let base64 = req.body.base64;
-    let imageId = req.body.id;
+    let userId = req.body.id;
+    analytics.event('Image', 'Save image', userId);
     image
-        .decode(base64, `${imageId}.png`)
+        .decode(base64, `${userId}.png`)
         .then((result) => {
             clarifai.predict(
                 `${BASE_URL}/public/images/${result}`,
                 (response) => {
+                    analytics.event('Image', 'Predict Image', userId);
                     res.json(billModel.parseData(response));
                     res.send(200);
                 }
@@ -67,12 +69,18 @@ app.post('/api/v1/image', (req, res) => {
 });
 
 app.post('/api/v1/analitycs', (req, res) => {
-    analytics.event();
+    analytics.event(
+        req.body.category,
+        req.body.event,
+        req.body.id
+    );
     res.send(200, "OK");
 });
 
 app.post('/api/v1/mail', (req, res) => {
     const data = req.param('email');
+    const userId = req.body.id;
+    analytics.event('Mail', 'Mail send', userId);
     mail.send(data, (error, body) => {
         console.log(body);
         res.send(200, body);
