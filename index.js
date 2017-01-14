@@ -53,7 +53,7 @@ app.post('/api/v1/image', (req, res) => {
             clarifai.predict(
                 `${BASE_URL}/public/images/${result}`,
                 (response) => {
-                    res.json(billModel.parseData(response));
+                    res.json(response);
                 }
             );
             //res.send(200, `${BASE_URL}/public/images/${result}`);
