@@ -1,6 +1,7 @@
 .idea/
 .env
 npm-debug.log
+public/images/
 
 # Created by https://www.gitignore.io/api/vim,emacs,intellij,emacs,sublimetext,node
 #

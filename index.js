@@ -11,7 +11,6 @@ const Mail = require('./src/mail');
 const UnviersalAnalytics = require('./src/analytics');
 const BillModel = require('./src/billModel');
 
-
 // Constants
 const CLARIFAI_ID = process.env.CLARIFAI_ID || '';
 const CLARIFAI_SECRET = process.env.CLARIFAI_SECRET || '';
@@ -21,7 +20,10 @@ const PORT = process.env.PORT || 8080;
 const IP = process.env.IP || '0.0.0.0';
 const BASE_URL = process.env.BASE_URL;
 
-if (!BASE_URL) throw Error('Error Url enviroment variable not found');
+if (!BASE_URL) {
+    throw Error('Error Url enviroment variable not found');
+}
+
 // Declarations
 let app = Express();
 let clarifai = Clarifai(CLARIFAI_ID, CLARIFAI_SECRET, CLARIFAI_MODEL_ID);
@@ -54,9 +56,9 @@ app.post('/api/v1/image', (req, res) => {
                 `${BASE_URL}/public/images/${result}`,
                 (response) => {
                     res.json(billModel.parseData(response));
+                    res.send(200);
                 }
             );
-            //res.send(200, `${BASE_URL}/public/images/${result}`);
         })
         .catch((err) => {
             // TODO: Find a better response status
