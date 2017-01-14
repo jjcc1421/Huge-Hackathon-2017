@@ -9,26 +9,29 @@ const Clarifai = require('./src/clarifai');
 const Image = require('./src/image');
 const Mail = require('./src/mail');
 const UnviersalAnalytics = require('./src/analytics');
+const BillModel = require('./src/billModel');
 
 
 // Constants
 const CLARIFAI_ID = process.env.CLARIFAI_ID || '';
 const CLARIFAI_SECRET = process.env.CLARIFAI_SECRET || '';
+const CLARIFAI_MODEL_ID = process.env.CLARIFAI_MODEL_ID || '';
 const GOOGLE_ANALYTICS = process.env.GOOGLE_ANALYTICS_TRACKING_ID || '';
 const PORT = process.env.PORT || 8080;
 const IP = process.env.IP || '0.0.0.0';
-const BASE_URL= process.env.BASE_URL;
+const BASE_URL = process.env.BASE_URL;
 
-if(!BASE_URL) throw Error('Error Url enviroment variable not found');
+if (!BASE_URL) throw Error('Error Url enviroment variable not found');
 // Declarations
 let app = Express();
-let clarifai = Clarifai(CLARIFAI_ID, CLARIFAI_SECRET);
+let clarifai = Clarifai(CLARIFAI_ID, CLARIFAI_SECRET, CLARIFAI_MODEL_ID);
 let analytics = UnviersalAnalytics(GOOGLE_ANALYTICS);
 let image = Image();
 let mail = new Mail({
     apiKey: process.env.MAILGUN_API_KEY || '',
     domain: process.env.MAILGUN_DOMAIN || ''
 });
+let billModel = BillModel();
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -49,7 +52,9 @@ app.post('/api/v1/image', (req, res) => {
         .then((result) => {
             clarifai.predict(
                 `${BASE_URL}/public/images/${result}`,
-                (response) => { res.send(200, response); }
+                (response) => {
+                    res.json(billModel.parseData(response));
+                }
             );
             //res.send(200, `${BASE_URL}/public/images/${result}`);
         })
