@@ -47,10 +47,11 @@ app.post('/api/v1/image', (req, res) => {
     image
         .decode(base64, `${imageId}.png`)
         .then((result) => {
-            clarifai.predict(
+            /*clarifai.predict(
                 `${BASE_URL}/public/images/${result}`,
                 (response) => { res.send(200, response); }
-            );
+            );*/
+            res.send(200, `${BASE_URL}/public/images/${result}`);
         }).catch((err) => {
             // TODO: Find a better response status
             res.send(400, 'Error saving the image.');
