@@ -52,7 +52,8 @@ app.post('/api/v1/image', (req, res) => {
                 (response) => { res.send(200, response); }
             );
             //res.send(200, `${BASE_URL}/public/images/${result}`);
-        }).catch((err) => {
+        })
+        .catch((err) => {
             // TODO: Find a better response status
             res.send(400, 'Error saving the image.');
         });
@@ -64,9 +65,10 @@ app.post('/api/v1/analitycs', (req, res) => {
 });
 
 app.post('/api/v1/mail', (req, res) => {
-    mail.send(function (error, body) {
+    const data = req.param('email');
+    mail.send(data, (error, body) => {
         console.log(body);
-        res.send(200, 'Email Sent');
+        res.send(200, body);
     });
 });
 
