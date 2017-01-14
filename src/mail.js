@@ -7,28 +7,17 @@ function Mail (options) {
     this.mail = MailGun(options); 
 };
 
-// Example json:
-//
-// {
-//     user: {
-//         name: 'Anony'
-//         lastName: 'Mo'
-//     },
-//     position: 'position of the user',
-//     recipientEmail: 'email@email.com'
-// }
-
 proto.send = function send(data, cb) {
-    let emailData = {
+    const name = data.name ? data.name : 'Someone';
+    const position = data.geo 
+            ? `http://maps.google.com/?q=${data.geo.lat},${data.geo.lon} - ${data.geo.name}`
+            : `Someplace`;
+    const emailData = {
       from: 'New Hope <help-request@samples.mailgun.org>',
-      to: data.recipientEmail,
-      subject: '${data.user.name} ${data.user.lastName} Needs Your Help',
-      text: 
-        `Hello,</br>` +
-        `This is an automated message.</br>` +
-        `${data.user.name} ${data.user.lastName} needs your help,` + 
-        `and their current position is <b>${data.position}</b>.</br>` +
-        `Thank You!`
+      subject: `${name} Needs Your Help`,
+      to: data.email ? data.email : 'help@algo.com',
+      html: 
+        `Hello, this is an automated message. ${name} needs your help and their current position is ${position}. Thank You!`
     };
 
     this.mail.messages().send(emailData, cb);
