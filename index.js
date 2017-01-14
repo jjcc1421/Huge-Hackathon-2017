@@ -9,6 +9,7 @@ const Clarifai = require('./src/clarifai');
 const Image = require('./src/image');
 const Mail = require('./src/mail');
 const UnviersalAnalytics = require('./src/analytics');
+const BillModel = require('./src/billModel');
 
 
 // Constants
@@ -30,6 +31,7 @@ let mail = new Mail({
     apiKey: process.env.MAILGUN_API_KEY || '',
     domain: process.env.MAILGUN_DOMAIN || ''
 });
+let billModel = BillModel();
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -50,7 +52,9 @@ app.post('/api/v1/image', (req, res) => {
         .then((result) => {
             clarifai.predict(
                 `${BASE_URL}/public/images/${result}`,
-                (response) => { res.send(200, response); }
+                (response) => {
+                    res.json(billModel.parseData(response));
+                }
             );
             //res.send(200, `${BASE_URL}/public/images/${result}`);
         }).catch((err) => {
