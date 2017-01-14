@@ -9,7 +9,7 @@ module.exports = function (clientId, clientSecret, clientModelId) {
         predict: (imageUrl, callBack) => {
             app.models.initModel('{id}')
 
-            app.models.get({ clientModelId }).then(
+            app.models.get(clientModelId).then(
                 function (model) {
                     model.predict(imageUrl).then(
                         (response) => { callBack(response) },
