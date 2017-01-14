@@ -11,7 +11,7 @@ module.exports = function () {
                 currency: null,
                 confidence: concept.value
             };
-            if (concept.value > 0.6)
+            if (concept.value > 0.3)
                 switch (concept.name) {
                     case 'Mil Pesos':
                         parsed.value = 1000;
