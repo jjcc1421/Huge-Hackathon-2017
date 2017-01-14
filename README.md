@@ -19,24 +19,28 @@ GOOGLE_ANALYTICS_TRACKING_ID='...'
 
 ## API
 
-Base url: <your_url>
-
-Path: /api/v1/currency
-Request:
+### Path: /api/v1/currency
+#### Request:
+```json
   {
     "id": "123",
     "base64": "image_long_something"
   }
-Response:
-  Data:
-    {
-      "bill": "1000",
-      "unit": "COP"
-    }
-  Status: 200
+```
 
-/api/v1/email
-Request:
+#### Response:
+Data:
+```json
+{
+  "bill": "1000",
+  "unit": "COP"
+}
+```
+Status: 200
+
+### /api/v1/email
+#### Request:
+```json
   {
     "id": "456",
     "geo": {
@@ -51,14 +55,19 @@ Request:
     ],
     "name": "Aurelio Cheveroni"     (optional)
   }
-Response:
-  Status: 200
+```
 
-/api/v1/analitycs
-  Request:
-    {
-      "category": "",
-      "action": ""
-    }
-  Response:
-    Status: 200
+#### Response:
+Status: 200
+
+### /api/v1/analitycs
+#### Request:
+```json
+{
+  "category": "",
+  "action": ""
+}
+```
+
+#### Response:
+Status: 200
