@@ -45,7 +45,8 @@ Data:
 ```json
 {
   "bill": "1000",
-  "unit": "COP"
+  "unit": "COP",
+  "confidence": "0.82"
 }
 ```
 Status: 200
