@@ -7,7 +7,7 @@ module.exports = function (clientId, clientSecret, clientModelId) {
 
     return {
         predict: (imageUrl, callBack) => {
-            app.models.predict(`{${clientModelId}}`, imageUrl).then(
+            app.models.predict(clientModelId, imageUrl).then(
                 (response) => { callBack(response) },
                 (err) => { console.error('Error: ', err) }
             );
